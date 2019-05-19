@@ -6,12 +6,12 @@
 #include <iostream>
 #include <tuple>
 #include <algorithm>
+#include "trio.h"
 
-
-struct comparison{
-    bool operator()(const auto  &a,const auto &b) const{
-        return a<1> > b<1>;
-    }
+struct compare{ //functor fun for the heap sort
+	bool operator()(const trio< node*,node*, unsigned int> &a, const trio< node*,node*, unsigned int> &b) const{
+		return a.third > b.third;
+	}
 };
 
 class graph{
@@ -21,7 +21,10 @@ class graph{
 
 	public:
 		void addNode(node* n);
+		void addNodes(std::vector<node*>);
 		void connectNodes(node* n,node* m, unsigned int length);
+		void connectNodes(node* n, std::vector<std::pair< node*, unsigned int> > cities);
+		void disconnectNodes(node* n, node* m, unsigned int length);
 		void printGraph();
 
 		std::vector<node*> dijkstra(node* start, node* end);
